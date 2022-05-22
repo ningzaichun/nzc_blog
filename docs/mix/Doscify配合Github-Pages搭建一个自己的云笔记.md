@@ -19,13 +19,13 @@
 
 
 
-![image-20220522211333693](C:\Users\ASUS\Desktop\nzc_blog\img\image-20220522211333693.png)
+![image-20220522211333693](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202205222202728.png)
 
 ### 二、将本地文件 push 至 github 仓库
 
 将我们本地的 docsify 初始化的项目及写好的文章等，push 至 github 仓库。
 
-![image-20220522211912629](C:\Users\ASUS\Desktop\nzc_blog\img\image-20220522211912629.png)
+![image-20220522211912629](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202205222202857.png)
 
 我的本地目录就是这样的，docs 就是我用docsify 创建的项目，稍后我们就是将这整个文件夹上传至 github 。
 
@@ -39,11 +39,11 @@ git remote add origin https://github.com/ningzaichun/nzc_blog.git ## 关联远�
 git push -u origin main ## push 至远程仓库
 ```
 
-![image-20220522212206407](C:\Users\ASUS\Desktop\nzc_blog\img\image-20220522212206407.png)
+![image-20220522212206407](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202205222202812.png)
 
 `push `完 `github `上的状态
 
-![image-20220522213114397](C:\Users\ASUS\Desktop\nzc_blog\img\image-20220522213114397.png)
+![image-20220522213114397](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202205222202241.png)
 
 
 
@@ -51,25 +51,25 @@ git push -u origin main ## push 至远程仓库
 
 ### 三 使用 github pages 部署
 
-![image-20220522214405460](C:\Users\ASUS\Desktop\nzc_blog\img\image-20220522214405460.png)
+![image-20220522214405460](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202205222202242.png)
 
-![image-20220522214423660](C:\Users\ASUS\Desktop\nzc_blog\img\image-20220522214423660.png)
+![image-20220522214423660](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202205222202923.png)
 
-![image-20220522214500969](C:\Users\ASUS\Desktop\nzc_blog\img\image-20220522214500969.png)
+![image-20220522214500969](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202205222202698.png)
 
-![image-20220522214559279](C:\Users\ASUS\Desktop\nzc_blog\img\image-20220522214559279.png)
+![image-20220522214559279](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202205222202487.png)
 
 
 
 点击下面的 `choose a them` 可以选择自己的发布样式
 
-![image-20220522214749826](C:\Users\ASUS\Desktop\nzc_blog\img\image-20220522214749826.png)
+![image-20220522214749826](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202205222202843.png)
 
 之后还会跳转一下,直接点击就好了,忘记截了,最后反正记得 `save ` 就好.
 
 
 
-![image-20220522215121742](C:\Users\ASUS\Desktop\nzc_blog\img\image-20220522215121742.png)
+![image-20220522215121742](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202205222202303.png)
 
 会弹出这样的一个提示消息,证明就完事啦.
 
@@ -77,7 +77,7 @@ git push -u origin main ## push 至远程仓库
 
 回到code页面会出现一个这样的.
 
-![image-20220522215429182](C:\Users\ASUS\Desktop\nzc_blog\img\image-20220522215429182.png)
+![image-20220522215429182](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202205222202523.png)
 
 
 
@@ -91,7 +91,7 @@ gh-pages 已经在五分钟前 push 了.当我框起来的那个地方,变成 `a
 
 直接点击这个 `github pages`进去是这样一个界面.
 
-![image-20220522215634679](C:\Users\ASUS\Desktop\nzc_blog\img\image-20220522215634679.png)
+![image-20220522215634679](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202205222202154.png)
 
 
 
