@@ -15,13 +15,13 @@
 - 通过 github pages 部署
 - 访问测试
 
-### 一、创建一个 github 仓库
+### 🪐创建一个 github 仓库
 
 
 
 ![image-20220522211333693](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202205222202728.png)
 
-### 二、将本地文件 push 至 github 仓库
+### 🌅将本地文件 push 至 github 仓库
 
 将我们本地的 docsify 初始化的项目及写好的文章等，push 至 github 仓库。
 
@@ -49,7 +49,7 @@ git push -u origin main ## push 至远程仓库
 
 
 
-### 三 使用 github pages 部署
+### 🌝使用 github pages 部署
 
 ![image-20220522214405460](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202205222202242.png)
 
@@ -73,7 +73,7 @@ git push -u origin main ## push 至远程仓库
 
 会弹出这样的一个提示消息,证明就完事啦.
 
-![image-20220522215200347](C:\Users\ASUS\Desktop\nzc_blog\img\image-20220522215200347.png)
+![image-20220522215200347](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202205230924208.png)
 
 回到code页面会出现一个这样的.
 
@@ -96,4 +96,12 @@ gh-pages 已经在五分钟前 push 了.当我框起来的那个地方,变成 `a
 
 
 直接点击这个 `view deployment` 就可以访问啦.
+
+
+
+### 🌁关于 Push 更新问题
+
+就是你将你本地的更新推送上去了，但是你访问 `github pages` 仍然是你未更新前的那个页面。 
+
+
 
