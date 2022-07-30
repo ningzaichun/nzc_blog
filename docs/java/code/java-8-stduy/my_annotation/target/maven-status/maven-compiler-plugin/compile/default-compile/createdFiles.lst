@@ -1,6 +1,0 @@
-com\nzc\my_annotation\MyAnnotationProcessor.class
-com\nzc\my_annotation\MyAnnotationProcessor$1.class
-com\nzc\my_annotation\MyAnnotationProcessor$2.class
-com\nzc\my_annotation\MyGetter.class
-com\nzc\my_annotation\MySetter.class
-META-INF\services\javax.annotation.processing.Processor
