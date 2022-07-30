@@ -1,0 +1,20 @@
+server:
+  port: 8089
+spring:
+  application:
+    name: springboot-redis
+justauth:
+  enabled: true
+  type:
+    GITEE:
+      client-id: 04e6e47c4caf927feb1d2aa24dd67ddca74cf869afe6037eaa15a2be96bdac32
+      client-secret: 7425eb229607c63dd58940525b390ebca3d8df20e70b6e5d94158c087336a5eb
+      redirect-uri: http://127.0.0.1:8089/oauth/gitee/callback
+  cache:
+    type: default
+
+
+
+
+
+
