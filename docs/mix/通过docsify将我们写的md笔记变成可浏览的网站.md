@@ -1,4 +1,4 @@
-# 使用 doscify 将文章写成文档一般丝滑
+#  使用 doscify 将文章写成文档一般丝滑
 
 > 以前老是看到 `github pages` 制作的那种笔记博客，总是想做而没有时间做，这次终于可以实现愿望啦。
 >
@@ -16,8 +16,8 @@
 
 docsify 即时生成您的文档网站。与 GitBook 不同的是，它不会生成静态 html 文件。相反，**它会巧妙地加载和解析您的 Markdown 文件并将它们显示为网站**。要开始使用它，您需要做的就是创建一个`index.html`并将[其部署在 GitHub Pages 上](https://docsify.js.org/#/deploy)。
 
-![image-20220522142251923](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202205221428227.png)
 
+![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8145ffea58d5416786cd282575111090~tplv-k3u1fbpfcp-watermark.image?)
 页面特别小清新，反正是很讨我喜欢哈哈。
 
 
@@ -60,11 +60,15 @@ docsify init [name]
 
 `注：` **建议使用名称  <u>docs</u>** 方便 `github pages`的部署。
 
-![image-20220522144914488](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202205222036818.png)
+![image.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5d6ed1ac67144b359ce48decf7599969~tplv-k3u1fbpfcp-watermark.image?)
 
 初始化成功后，可以看到目录下创建的几个文件：
 
-![image-20220522145051455](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202205222036254.png)
+
+![image.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/63ab6c47e3d94e2490e48fc7a90a4f6b~tplv-k3u1fbpfcp-watermark.image?)
+
+
+
 
 解释如下：
 
@@ -82,11 +86,12 @@ docsify init [name]
 docsify serve [项目名称]
 ```
 
-![image-20220522145606695](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202205222036794.png)
+![image-20220522145606695](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/172c642a0be1415e909b49490d4163f3~tplv-k3u1fbpfcp-zoom-1.image)
 
 我们在浏览器中输入 `http://localhost:3000`
 
-![image-20220522145706546](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202205222036117.png)
+![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/af37b58b33cd43dc909fb4428d526b9e~tplv-k3u1fbpfcp-watermark.image?)
+
 
 展示的首页内容就是 `README.md` 中的内容。这里我就不再重复述说了，自己试就好了。
 
@@ -131,7 +136,7 @@ docsify serve [项目名称]
 
 设置 `name  和 repo `的话，可以看到如下样式：
 
-![image-20220522152714747](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202205222037087.png)
+![image-20220522152714747](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/aae36a1d50be40f9903c2672475e0edc~tplv-k3u1fbpfcp-zoom-1.image)
 
 编写 `_coverpage.md` 文件
 
@@ -155,7 +160,7 @@ docsify serve [项目名称]
 
 展示效果
 
-![](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202205222037048.png)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/95aa57ec5d0c4f73a478b6ec06c72335~tplv-k3u1fbpfcp-zoom-1.image)
 
 这里还可以自定义背景，多张封面等，没去深入了解了。大家感兴趣可以去看看。
 
@@ -186,11 +191,14 @@ docsify serve [项目名称]
 
 这个文件的位置
 
-![image-20220522153409128](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202205222037519.png)
+![image-20220522153409128](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4d5fb681c64445d8a142b235ed79d37b~tplv-k3u1fbpfcp-zoom-1.image)
 
 随便写点内容进去， 不然访问的时候一直是报404的。
 
-![image-20220522153958577](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202205222037165.png)
+
+
+![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/272dad26913e4a42a6c40b7d0ab43ec4~tplv-k3u1fbpfcp-watermark.image?)
+
 
 #### 3）导航栏设置
 
@@ -217,7 +225,7 @@ docsify serve [项目名称]
   * [掘金](https://juejin.cn/)
 ```
 
-![image-20220522160622183](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202205222037848.png)
+![image-20220522160622183](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/df8055d0aa234073a95df60fdb672085~tplv-k3u1fbpfcp-zoom-1.image)
 
 
 
@@ -420,7 +428,6 @@ docsify 内置的代码高亮工具是  [Prism](https://links.jianshu.com/go?to=
 
 我记得我自己常说希望一直把写文当作生活中的乐趣，现在的我仍然是如此。
 
-只不过这次我不再想做个简单的创作者了，我想去试着去写出自己的风格，成为一名真正意义上的内容创作者，没有人知道未来会不会是如此，又或许今天的我是这么说，三天后的我又完全是另外的态度，这才是人之常态吧。
+希望能一直坚持吧！！！
 
 > 祝你 他日凌云，万事胜意。
-

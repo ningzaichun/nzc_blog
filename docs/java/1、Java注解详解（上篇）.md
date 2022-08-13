@@ -1,24 +1,22 @@
-# Java注解
+# Java注解详解和自定义注解实战，用代码讲解
 
-关于我为啥突然想要深入的了解Java注解和反射
+关于我为啥突然又想要了解Java注解和反射
 
-1. 好奇心来啦
-2. 打算看源码
-3. 巩固Java基础知识（基础不牢，地动山摇）
+1.  好奇心来啦
+1.  打算看源码（只是有想法，flag中，实现挺难）
+1.  巩固Java基础知识（基础不牢，地动山摇）
 
 ### 一、逻辑思维图🧐
 
-![Java注解](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202207072320500.png)
-
-
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4e09b26d037e4688afe33ec607a84e3c~tplv-k3u1fbpfcp-zoom-1.image)
 
 第 1-5 小节均偏向于理论知识，若只是想要了解如何自定义注解和如何应用注解，请跳转至第6小节开始阅读。
 
-在本篇中，主要是针对`注解的概念`及`运行时注解`进行解释说明。
+在本篇中，主要是针对`注解的概念`和`运行时注解`进行解释说明，附带有三个实战的案例，尽可能的让大家能够理解透彻并且能够加以应用。
 
 ### 二、什么是注解👨‍🏫
 
-> `Java `注解(`Annotation`)用于为 Java 代码提供元数据。作为元数据，注解不直接影响你的代码执行，但也有一些类型的注解实际上可以用于这一目的。`Java `注解是从 Java5 开始添加到 Java 的。--官方文档
+> ` Java  `注解(`Annotation`)用于为 Java 代码提供元数据。作为元数据，注解不直接影响你的代码执行，但也有一些类型的注解实际上可以用于这一目的。` Java  `注解是从 Java5 开始添加到 Java 的。--官方文档
 
 #### 2.1、注解
 
@@ -36,7 +34,7 @@
 
 另外一种则是编译时注解，如我们常常使用的 lombok 里的注解，`@Data`，它能够帮我们省略`set/get`方法，我们在`Class`上加上这个注解后，在编译的时候，`lombok`其实是修改了`.class`文件的，将`set/get`方法放进去了，不然的话，你可以看看编译完后的`.class`文件。诸如这种，我们常称为`编译时注解`，也就是使用`javac`处理注解。
 
-![image-20220707201241625](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202207072319084.png)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/20300e48f9a441ddbd71b02f962527d5~tplv-k3u1fbpfcp-zoom-1.image)
 
 --图：来自于[极客学院](https://wiki.jikexueyuan.com/project/java-vm/java-debug.html)
 
@@ -46,25 +44,19 @@
 
 > 这一块不是我的关注点，略过略过啦，朋友们，好奇可以去研究研究噢
 
-### 三、注解的作用💞
+### 三、注解的目的或作用💞
 
-- **生成文档**。这是最常见的，也是 Java 最早提供的注解。如`@param、@return`等等
+-   **生成文档**。这是最常见的，也是 Java 最早提供的注解。如`@param、@return`等等
+-   **跟踪代码依赖性，实现替代配置文件功能。**作用就是减少配置，如 `Spring`中`Bean`的装载注入，而且现在的框架基本上都是使用注解来减少配置文件的数量，同时这样也使得编程更加简洁，代码更加清晰。
+-   **在编译时进行格式检查。**如`@Override`放在方法前，如果你这个方法并不是覆盖了超类方法，则编译时就能检查出；
+-   **标识作用。**当`Java`编译时或运行时，检测到这里的注解，做什么的处理，自定义注解一般如此。
+-   **携带信息。** 注解的成员提供了程序元素的关联信息，` Annotation  `的成员在 `Annotation`类型中以无参数的方法的形式被声明。其方法名和返回值定义了该成员的名字和类型。在此有一个特定的默认 语法：允许声明任何`Annotation`成员的默认值。一个`Annotation`可以将`name=value`对作为没有定义默认值的` Annotation  `成员的值，当然也可以使用`name=value`对来覆盖其它成员默认值。这一点有些近似类的继承特性，父类的构造函数可以作为子类的默认构造函数，但是也 可以被子类覆盖。
+-   这么一大段话，其实就是关于注解中成员的解释。
+-
 
-- **跟踪代码依赖性，实现替代配置文件功能。**作用就是减少配置，如 `Spring`中`Bean`的装载注入，而且现在的框架基本上都是使用注解来减少配置文件的数量，同时这样也使得编程更加简洁，代码更加清晰。
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/107f5fb40b9b4723a0b1126311267021~tplv-k3u1fbpfcp-zoom-1.image)
 
-- **在编译时进行格式检查。**如`@Override`放在方法前，如果你这个方法并不是覆盖了超类方法，则编译时就能检查出；
-
-- **标识作用。**当`Java`编译时或运行时，检测到这里的注解，做什么的处理，自定义注解一般如此。
-
-- **携带信息。** 注解的成员提供了程序元素的关联信息，`Annotation `的成员在 `Annotation`类型中以无参数的方法的形式被声明。其方法名和返回值定义了该成员的名字和类型。在此有一个特定的默认 语法：允许声明任何`Annotation`成员的默认值。一个`Annotation`可以将`name=value`对作为没有定义默认值的`Annotation `成员的值，当然也可以使用`name=value`对来覆盖其它成员默认值。这一点有些近似类的继承特性，父类的构造函数可以作为子类的默认构造函数，但是也 可以被子类覆盖。
-
-  这么一大段话，其实就是关于注解中成员的解释。
-
-  ![image-20220706204720455](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202207072326152.png)
-
-
-
-上面说了这么多，其实一句话也能表达完。
+说了这么多，其实一句话也能表达完。
 
 注解就是一张便利贴，它贴在那里，你看到的那一刻，就明白该做什么事啦。
 
@@ -78,13 +70,13 @@
 
 Java中 内置的注解有5类，具体包括：
 
-`@Deprecated`：过时注解，用于标记已过时 & 被抛弃的元素（类、方法等）
+**`@Deprecated`**：过时注解，用于标记已过时 & 被抛弃的元素（类、方法等）
 
-`@Override`：复写注解，用于标记该方法需要被子类复写
+**`@Override`**：复写注解，用于标记该方法需要被子类复写
 
-`@SuppressWarnings`：阻止警告注解，用于标记的元素会阻止编译器发出警告提醒
+**`@SuppressWarnings`**：阻止警告注解，用于标记的元素会阻止编译器发出警告提醒
 
-`@SafeVarargs`：参数安全类型注解，用于提醒开发者不要用参数做不安全的操作 & 阻止编译器产生 unchecked警告，Java 1.7 后引入
+**`@SafeVarargs`**：参数安全类型注解，用于提醒开发者不要用参数做不安全的操作 & 阻止编译器产生 unchecked警告，Java 1.7 后引入
 
 ### 五、元注解 🎯
 
@@ -102,42 +94,26 @@ Java中 内置的注解有5类，具体包括：
 
 说明了注解所修饰的对象范围：注解可被用于 packages、types（类、接口、枚举、Annotation类型）、类型成员（方法、构造方法、成员变量、枚举值）、方法参数和本地变量（如循环变量、catch参数）。
 
-| 修饰范围枚举               | 作用                                               |
-| -------------------------- | -------------------------------------------------- |
-| ElementType.CONSTRUCTOR    | 作用于构造器                                       |
-| ElementType.FIELD          | 作用于域/属性                                      |
-| ElementType.LOCAL_VARIABLE | 作用于描述局部变量                                 |
-| ElementType.METHOD         | 作用于方法                                         |
-| ElementType.PACKAGE        | 作用于描述包                                       |
-| ElementType.PARAMETER      | 用于描述参数                                       |
-| ElementType.TYPE           | 用于描述类、接口(包括注解类型) 或 enum声明，最常用 |
-
 #### 5.2、@Retention
 
 定义了该注解的生命周期：
 
-1. 某些注解仅出现在源代码中，而被编译器丢弃； （源码级）
-2. 而另一些却被编译在class文件中； （字节码级）
-3. 编译在class文件中的注解可能会被虚拟机忽略，而另一些在class被装载时将被读取（请注意并不影响class的执行，因为注解与class在使用上是被分离的）。绝大多数开发者都是使用RUNTIME，因为我们期望在程序运行时，能够获取到这些注解，并干点有意思的事儿，而只有RetentionPolicy.RUNTIME，能确保自定义的注解在运行时依然可见。（运行级）
+1.  某些注解仅出现在源代码中，而被编译器丢弃； （源码级）
+1.  而另一些却被编译在class文件中； （字节码级）
+1.  编译在class文件中的注解可能会被虚拟机忽略，而另一些在class被装载时将被读取（请注意并不影响class的执行，因为注解与class在使用上是被分离的）。绝大多数开发者都是使用RUNTIME，因为我们期望在程序运行时，能够获取到这些注解，并干点有意思的事儿，而只有RetentionPolicy.RUNTIME，能确保自定义的注解在运行时依然可见。（运行级）
 
 使用这个元注解可以对自定义注解的“生命周期”进行限制。
 
-| 生命周期策略枚举        | 作用                                                         |
-| ----------------------- | ------------------------------------------------------------ |
-| RetentionPolicy.RUNTIME | 注解会在class字节码文件中存在，在运行时可以通过反射获取到。  |
-| RetentionPolicy.CLASS   | 默认的保留策略，注解会在class字节码文件中存在，但运行时无法获得。 |
-| RetentionPolicy.SOURCE  | 注解仅存在于源码中，在class字节码文件中不包含。              |
+RetentionPolicy.SOURCE 一般开发者很少用到，大都是Java内置的注解。如`@Override`
 
-RetentionPolicy.SOURCE 一般开发者很少用到，大都是Java内置的注解。如`@Override `
-
-```java
+```
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.SOURCE)
 public @interface Override {
 }
 ```
 
-```java
+```
 @Target({TYPE, FIELD, METHOD, PARAMETER, CONSTRUCTOR, LOCAL_VARIABLE})
 @Retention(RetentionPolicy.SOURCE)
 public @interface SuppressWarnings {
@@ -149,9 +125,9 @@ public @interface SuppressWarnings {
 
 当然，这种方式有它自身的缺陷，譬如不一致性，问题排解时的困扰，以及依赖问题，不是本篇重点，扯回来。
 
-- 提供信息给编译器： 编译器可以利用注解来检测出错误或者警告信息，打印出日志。
-- 编译阶段时的处理： 软件工具可以用来利用注解信息来自动生成代码、文档或者做其它相应的自动处理。
-- 运行时处理： 某些注解可以在程序运行的时候接受代码的提取，自动做相应的操作。
+-   提供信息给编译器： 编译器可以利用注解来检测出错误或者警告信息，打印出日志。
+-   编译阶段时的处理： 软件工具可以用来利用注解信息来自动生成代码、文档或者做其它相应的自动处理。
+-   运行时处理： 某些注解可以在程序运行的时候接受代码的提取，自动做相应的操作。
 
 #### 5.3、@Documented
 
@@ -173,8 +149,8 @@ public @interface SuppressWarnings {
 
 自定义注解过程：
 
-1. 声明一个类MyAnnotation
-2. 把class关键字改为@interface
+1.  声明一个类MyAnnotation
+1.  把class关键字改为@interface
 
 这样我们就声明了一个自定义的注解，当我们用`@interface`声明一个注解的时候，实际上是声明了一个接口，这个接口自动的继承了`java.lang.annotation.Annotation`，但是我们只需要`@interface`这个关键字来声明注解，编译器会自动的完成相关的操作，不需要我们手动的指明继承`Annotation`接口
 
@@ -182,7 +158,7 @@ public @interface SuppressWarnings {
 
 我举了四个例子，这四个注解分别是放在 类（接口、枚举类上）、构造函数、方法级别、成员属性上的。
 
-```java
+```
 @Documented    //定义可以被文档工具文档化
 @Retention(RetentionPolicy.RUNTIME)//声明周期为runtime，运行时可以通过反射拿到
 @Target(ElementType.TYPE)//注解修饰范围为类、接口、枚举
@@ -192,9 +168,7 @@ public @interface ClassAnnotation {
 }
 ```
 
-
-
-```java
+```
 @Documented
 @Target(ElementType.CONSTRUCTOR)
 @Retention(RetentionPolicy.RUNTIME)
@@ -204,9 +178,7 @@ public @interface ConstructorAnnotatin {
 }
 ```
 
-
-
-```java
+```
 @Documented
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
@@ -217,9 +189,7 @@ public @interface FieldAnnotation {
 }
 ```
 
-
-
-```java
+```
  @Documented
  @Retention(RetentionPolicy.RUNTIME)
  @Target(ElementType.METHOD)
@@ -229,7 +199,7 @@ public @interface FieldAnnotation {
  }
 ```
 
-```java
+```
 public enum MethodTypeEnum {
     TYPE1,TYPE2
 }
@@ -237,25 +207,19 @@ public enum MethodTypeEnum {
 
 #### 6.2、注解的成员变量
 
-1. 成员以无参数无异常的方式声明  ` String constructorName() default "";`
-
-2. 可以使用default为成员指定一个默认值` public String name() default "defaultName";`
-
-3. 成员类型是受限的，合法的类型包括原始类型以及String、Class、Annotation、Enumeration （JAVA的基本数据类型有8种：byte(字节)、short(短整型)、int(整数型)、long(长整型)、float(单精度浮点数类型)、double(双精度浮点数类型)、char(字符类型)、boolean(布尔类型）
-
-   ` public MethodTypeEnum type() default MethodTypeEnum.TYPE1;`
-
-4. 注解类可以没有成员，没有成员的注解称为**标识注解**，例如JDK注解中的@Override、@Deprecation
-
-5. 如果注解只有一个成员，并且把成员取名为value()，则在使用时可以忽略成员名和赋值号“=” 
-
-   例如JDK注解的@SuppviseWarnings ；如果成员名 不为value，则使用时需指明成员名和赋值号"="
+1.  成员以无参数无异常的方式声明 `String constructorName() default "";`
+1.  可以使用default为成员指定一个默认值`  public String name() default "defaultName"; `
+1.  成员类型是受限的，合法的类型包括原始类型以及String、Class、Annotation、Enumeration （JAVA的基本数据类型有8种：byte(字节)、short(短整型)、int(整数型)、long(长整型)、float(单精度浮点数类型)、double(双精度浮点数类型)、char(字符类型)、boolean(布尔类型）
+1.  `public MethodTypeEnum type() default MethodTypeEnum.TYPE1;`
+1.  注解类可以没有成员，没有成员的注解称为**标识注解**，例如JDK注解中的@Override、@Deprecation
+1.  如果注解只有一个成员，并且把成员取名为value()，则在使用时可以忽略成员名和赋值号“=”
+1.  例如JDK注解的@SuppviseWarnings ；如果成员名 不为value，则使用时需指明成员名和赋值号"="
 
 #### 6.3、使用注解
 
 因为我们在注解中声明了属性,所以在使用注解的时候必须要指明属性值 ,多个属性之间没有顺序,多个属性之间通过逗号分隔
 
-```java
+```
 @ClassAnnotation(name = "personBean", version = "1.2.1")
 public class Person {
 
@@ -289,7 +253,7 @@ public class Person {
 
 我们声明一个`Student`类用来描述学生对象的信息的
 
-```java
+```
 class Student{
    String name;
    String school;
@@ -301,7 +265,7 @@ class Student{
 
 在Java类中，每个类都会有对应的Class，要想执行反射操作，必须先要获取指定类名的Class
 
----
+***
 
 **了解Class对象**：
 
@@ -311,39 +275,34 @@ class Student{
 
 类对象的信息包括：
 
-1. 类的基本信息：包名、修饰符、类名、基类，实现的接口
-2. 属性的信息：修饰符、属性类型、属性名称、属性值，
-3. 方法的信息：修饰符、返回类型、方法名称、参数列表、抛出的异常
-4. 构造方法的信息：修饰符、类名、参数列表、抛出的异常
-5. 注解的相关信息：
-   - 因为：类对象的相关信息全部保存在Class类
-   - 所以：Class类会提供获取这些信息的方法
+1.  类的基本信息：包名、修饰符、类名、基类，实现的接口
+1.  属性的信息：修饰符、属性类型、属性名称、属性值，
+1.  方法的信息：修饰符、返回类型、方法名称、参数列表、抛出的异常
+1.  构造方法的信息：修饰符、类名、参数列表、抛出的异常
+1.  注解的相关信息：
+1.  因为：类对象的相关信息全部保存在Class类
+1.  所以：Class类会提供获取这些信息的方法
 
 一旦某个类的 Class 对象被载入内存，它就可以用来创建这个类的所有对象。
 
----
+***
 
 通过 Class 获取类的相关信息，通过Class创建对象，通过 Class 调用对象上面的属性，调用对象上面的方法，这种操作就称为反射，要想执行反射操作，必须先要获取到指定的类名的 Class
 
 获取Class的不同方式
 
-- 获取基本类型的Class
+-   获取基本类型的Class
+-   1）基本类型Class：如 int.Class获取的就是 int 类型的 Class
+-   获取引用类型的Class：
+-   1）引用类型的Class：如String.Class获取的就是String类对应的Class
+-   2）通过对象来获取：如：String obj="hello"，Class calz = obj.getClass()，获取的就是String类对应的Class
+-   3）Class.forName("java.lang.String")，获取的就是对应的Class
 
-  1）基本类型Class：如 int.Class获取的就是 int 类型的 Class
-
-- 获取引用类型的Class：
-
-  1）引用类型的Class：如String.Class获取的就是String类对应的Class
-
-  2）通过对象来获取：如：String obj="hello"，Class calz = obj.getClass()，获取的就是String类对应的Class
-
-  3）Class.forName("java.lang.String")，获取的就是对应的Class
-
----
+***
 
 #### 6.5、提取注解
 
-```java
+```
 public class TestClassAnnotation {
 
     private static Person person = new Person();
@@ -368,102 +327,97 @@ public class TestClassAnnotation {
 }
 ```
 
-```bash
+```
 This is a class with annotation ClassAnnotation!
 BeanName = personBean
 BeanVersion = 1.2.1
 ```
 
-
-
-```java
+```
 public class AnnotationTest {
  
-	public static void main(String[] args) throws ClassNotFoundException {
-		Class<?> clazz = Class.forName("com.nzc.my_annotation.shang.Person");
-		System.out.println("==============类注解解析==============");
-		printClassAnno(clazz);
-		
-		System.out.println("==============成员变量注解解析==============");
-		printFieldAnno(clazz);
-		
-		System.out.println("==============成员方法注解解析==============");
-		printMethodAnno(clazz);
-		
-		System.out.println("==============构造器注解解析==============");
-		printConstructorAnno(clazz);
-		
-	}
-	
-	/**
-	 * 打印类的注解
-	 */
-	private static void printClassAnno(Class<?> clazz) throws ClassNotFoundException {
-		//判断是否有AuthorAnnotatin注解
-		if(clazz.isAnnotationPresent(ClassAnnotation.class)) {
-			//获取AuthorAnnotatin类型的注解
-			ClassAnnotation annotation = clazz.getAnnotation(ClassAnnotation.class);
-			System.out.println(annotation.name()+"\t"+annotation.version());
-		}
-	}
-	
-	
-	/**
-	 * 打印成员变量的注解
-	 */
-	private static void printFieldAnno(Class<?> clazz) throws ClassNotFoundException {
-		Field[] fields = clazz.getDeclaredFields();
-		for (Field field : fields) {
-			if(field.isAnnotationPresent(FieldAnnotation.class)) {
-				FieldAnnotation annotation = field.getAnnotation(FieldAnnotation.class);
-				System.out.println(annotation.name()+"\t"+annotation.value());
-			}
-		}
-	}
-	
-	/**
-	 * 打印成员变量的注解
-	 */
-	private static void printMethodAnno(Class<?> clazz) throws ClassNotFoundException {
-		Method[] methods = clazz.getDeclaredMethods();
-		for (Method method : methods) {
-			if(method.isAnnotationPresent(MethodAnnotation.class)) {
-				MethodAnnotation annotation = method.getAnnotation(MethodAnnotation.class);
-				System.out.println(annotation.name()+"\t"+annotation.type());
-			}
-		}
-	}
-	
-	/**
-	 * 打印成员变量的注解
-	 */
-	private static void printConstructorAnno(Class<?> clazz) throws ClassNotFoundException {
-		Constructor<?>[] constructors = clazz.getDeclaredConstructors();
-		for (Constructor<?> constructor : constructors) {
-			if(constructor.isAnnotationPresent(ConstructorAnnotatin.class)) {
-				ConstructorAnnotatin annotation = constructor.getAnnotation(ConstructorAnnotatin.class);
-				System.out.println(annotation.constructorName()+"\t"+annotation.remark());
-			}
-		}
-		System.out.println("无");
-	}
-	
+  public static void main(String[] args) throws ClassNotFoundException {
+    Class<?> clazz = Class.forName("com.nzc.my_annotation.shang.Person");
+    System.out.println("==============类注解解析==============");
+    printClassAnno(clazz);
+    
+    System.out.println("==============成员变量注解解析==============");
+    printFieldAnno(clazz);
+    
+    System.out.println("==============成员方法注解解析==============");
+    printMethodAnno(clazz);
+    
+    System.out.println("==============构造器注解解析==============");
+    printConstructorAnno(clazz);
+    
+  }
+  
+  /**
+   * 打印类的注解
+   */
+  private static void printClassAnno(Class<?> clazz) throws ClassNotFoundException {
+    //判断是否有AuthorAnnotatin注解
+    if(clazz.isAnnotationPresent(ClassAnnotation.class)) {
+      //获取AuthorAnnotatin类型的注解
+      ClassAnnotation annotation = clazz.getAnnotation(ClassAnnotation.class);
+      System.out.println(annotation.name()+"\t"+annotation.version());
+    }
+  }
+  
+  
+  /**
+   * 打印成员变量的注解
+   */
+  private static void printFieldAnno(Class<?> clazz) throws ClassNotFoundException {
+    Field[] fields = clazz.getDeclaredFields();
+    for (Field field : fields) {
+      if(field.isAnnotationPresent(FieldAnnotation.class)) {
+        FieldAnnotation annotation = field.getAnnotation(FieldAnnotation.class);
+        System.out.println(annotation.name()+"\t"+annotation.value());
+      }
+    }
+  }
+  
+  /**
+   * 打印成员变量的注解
+   */
+  private static void printMethodAnno(Class<?> clazz) throws ClassNotFoundException {
+    Method[] methods = clazz.getDeclaredMethods();
+    for (Method method : methods) {
+      if(method.isAnnotationPresent(MethodAnnotation.class)) {
+        MethodAnnotation annotation = method.getAnnotation(MethodAnnotation.class);
+        System.out.println(annotation.name()+"\t"+annotation.type());
+      }
+    }
+  }
+  
+  /**
+   * 打印成员变量的注解
+   */
+  private static void printConstructorAnno(Class<?> clazz) throws ClassNotFoundException {
+    Constructor<?>[] constructors = clazz.getDeclaredConstructors();
+    for (Constructor<?> constructor : constructors) {
+      if(constructor.isAnnotationPresent(ConstructorAnnotatin.class)) {
+        ConstructorAnnotatin annotation = constructor.getAnnotation(ConstructorAnnotatin.class);
+        System.out.println(annotation.constructorName()+"\t"+annotation.remark());
+      }
+    }
+    System.out.println("无");
+  }
+  
 }
 ```
 
-```bash
+```
 ==============类注解解析==============
-personBean	1.2.1
+personBean  1.2.1
 ==============成员变量注解解析==============
-description	This is my personal annotation
+description  This is my personal annotation
 ==============成员方法注解解析==============
-sayHello	TYPE2
+sayHello  TYPE2
 ==============构造器注解解析==============
 无
-
 ```
-
-
 
 ### 七、自定义注解实战🐱‍🏍
 
@@ -477,11 +431,11 @@ sayHello	TYPE2
 
 `注意：`此案例不可CV直接运行，代码很容易实现，大家理解思路即可。
 
----
+***
 
 定义注解：
 
-```java
+```
 @Target({ElementType.METHOD,ElementType.TYPE}) // 这个注解可以放在也可以放在方法上的。
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Authority {
@@ -489,7 +443,7 @@ public @interface Authority {
 }
 ```
 
-```java
+```
 public enum Role {
     SADMIN,
     ADMIN,
@@ -498,11 +452,11 @@ public enum Role {
 }
 ```
 
----
+***
 
 使用注解：
 
-```java
+```
 @Authority(roles = {Role.ADMIN, Role.SADMIN}) // 放在类上 说明这个类下所有的方法都需要有这个权限才可以进行访问
 @RestController
 @RequestMapping("/admin")
@@ -515,13 +469,13 @@ public class AdminController {
 }
 ```
 
-```java
+```
 @Controller
 @RequestMapping("/student")
 public class StudentController {
 
 
-	@Authority(roles = {Role.STUDENT}) // 放在方法上则说明此方法需要注解上的权限才能进行访问
+  @Authority(roles = {Role.STUDENT}) // 放在方法上则说明此方法需要注解上的权限才能进行访问
     @GetMapping("/test")
     public String test(){
         return "你好，我已经不是一名学生啦";
@@ -530,9 +484,9 @@ public class StudentController {
 }
 ```
 
----
+***
 
-编写 `SpringMVC `拦截器及处理注解的`Handler`
+编写 ` SpringMVC  `拦截器及处理注解的`Handler`
 
 在其中进行 Token 的判断，和访问方法的权限判断，看方法上是否有注解，有的话，
 
@@ -540,7 +494,7 @@ public class StudentController {
 
 > 当时用的是`SSM`框架，所以才会看到有 `response.sendRedirect(contextPath + "/login");`这样的。
 
-```java
+```
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
     private static final Logger log = LoggerFactory.getLogger(WebExceptionHandler.class);
@@ -600,11 +554,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 }
 ```
 
- * 用于检查 方法 或者  类  是否需要权限
- * 并和 拥有的权限做对比
- * 如果方法上有 ，则以方法的 优先
+-   用于检查 方法 或者 类 是否需要权限
+-   并和 拥有的权限做对比
+-   如果方法上有 ，则以方法的 优先
 
-```java
+```
 public class HandlerUitl {
 
     public static boolean checkAuthority(Object handler, Role[] roles1){
@@ -641,21 +595,20 @@ public class HandlerUitl {
     }
 
 }
-
 ```
 
 #### 7.2、自定义注解+AOP+Redis 防止重复提交
 
 先简单说一下防止重复提交注解的逻辑：
 
-1. 在需要防止重复提交的接口的方法，加上注解。
-2. 发送请求写接口携带 Token
-3. 请求的路径+ Token 拼接程 key，value 值为生成的 UUID 码
-4. 然后 `set Redis` 分布式锁，能获取到就顺利提交（分布式锁默认 5 秒过期），不能获取就是重复提交了，报错。
+1.  在需要防止重复提交的接口的方法，加上注解。
+1.  发送请求写接口携带 Token
+1.  请求的路径+ Token 拼接程 key，value 值为生成的 UUID 码
+1.  然后 `set Redis` 分布式锁，能获取到就顺利提交（分布式锁默认 5 秒过期），不能获取就是重复提交了，报错。
 
 定义注解
 
-```java
+```
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -673,9 +626,9 @@ public @interface NoRepeatSubmit {
 }
 ```
 
-定义处理注解的切面类 
+定义处理注解的切面类
 
-```java
+```
 import com.eshop.api.ApiResult;
 import com.eshop.common.aop.NoRepeatSubmit;
 import com.eshop.common.util.RedisLock;
@@ -756,7 +709,7 @@ public class RepeatSubmitAspect {
 }
 ```
 
-```java
+```
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -825,12 +778,11 @@ public class RedisLock {
         });
     }
 }
-
 ```
 
 使用注解
 
-```java
+```
 /**
      * 添加收藏
      */
@@ -849,17 +801,17 @@ public ApiResult<Boolean> collectAdd(@Validated @RequestBody StoreProductRelatio
 
 [自定义注解 + Aop 实现日志收集](https://juejin.cn/post/6996480742523928583)
 
----
+***
 
 ### 八、自言自语💌
 
 原本还想找点面试题的，但是到处找了找，面试大部分也就是面试上面这些知识点，所以就删掉啦。
 
-> 本篇主要是针对`Java`运行时的注解的讲解及应用，但是你想一想，我们使用`lombok`的注解时，为什么加了个注解就可以帮我们自动生成代码呢？是谁给我们做了这件事情呢？它的原理是什么样的呢？
+> 本篇主要是针对`Java`运行时的注解的讲解及应用，但是你想一想，我们使用`lombok`的注解时，它的实现原理又是什么样的呢？为什么可以帮我们自动生成代码呢？是谁给我们做了这件事情呢？
 
 下篇主要是针对上述的几个疑问来展开的，文章的大纲和构思倒是有点想法，但是不知道能不能写好下篇。
 
-另外Java注解的下半场，主要是围绕着 `AbstractProcessor `相关来讲，其实也算是冷门知识了，但是好奇心还是要有的。
+另外Java注解的下半场，主要是围绕着 ` AbstractProcessor  `相关来讲，其实也算是冷门知识了，但是好奇心还是要有的。
 
 > 也非常感谢大家的阅读，觉得有所收获的话，可以点点赞，或者留下评论，让我收到你的反馈吧
 >
@@ -867,16 +819,12 @@ public ApiResult<Boolean> collectAdd(@Validated @RequestBody StoreProductRelatio
 
 参考
 
-- [Java元注解 - 生命周期 @Retention](https://blog.51cto.com/u_10705830/2164430)
-- [JAVA注解开发（精讲）](https://blog.csdn.net/qq_30347133/article/details/83686068)
-- [Java 注解完全解析](https://blog.csdn.net/siutony/article/details/118227018?spm=1001.2014.3001.5506)
-- [面试官：什么是 Java 注解？](https://cloud.tencent.com/developer/article/1935630)
-- [java自定义注解解析及相关场景实现](https://blog.csdn.net/Andyzhu_2005/article/details/81355399?spm=1001.2014.3001.5506)
-- [【对线面试官】Java注解](https://juejin.cn/post/6909692344291819533)
+-   [Java元注解 - 生命周期 @Retention](https://blog.51cto.com/u_10705830/2164430)
+-   [JAVA注解开发（精讲）](https://blog.csdn.net/qq_30347133/article/details/83686068)
+-   [Java 注解完全解析](https://blog.csdn.net/siutony/article/details/118227018?spm=1001.2014.3001.5506)
+-   [面试官：什么是 Java 注解？](https://cloud.tencent.com/developer/article/1935630)
+-   [java自定义注解解析及相关场景实现](https://blog.csdn.net/Andyzhu_2005/article/details/81355399?spm=1001.2014.3001.5506)
+-   [【对线面试官】Java注解](https://juejin.cn/post/6909692344291819533)
 
 
-
-
-
-
-
+我正在参与掘金技术社区创作者签约计划招募活动，[点击链接报名投稿](https://juejin.cn/post/7112770927082864653 "https://juejin.cn/post/7112770927082864653")。

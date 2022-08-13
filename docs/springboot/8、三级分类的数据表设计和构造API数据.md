@@ -1,12 +1,10 @@
 # 三级分类的数据表设计和构造API数据
 
-![Snipaste_2022-07-15_23-47-03](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202207152349532.png)
-
-如此的业务需求应该说是每个项目中的基本吧。
+>如此的业务需求应该说是每个项目中的基本吧。
 
 诸如下图这种：
 
-![image-20220715214828373](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202207152334979.png)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8b00b700c82a442da00f64b7c058e184~tplv-k3u1fbpfcp-zoom-1.image)
 
 一级菜单下有二级菜单和三级菜单。与此类似的应用场景还有很多很多，如省市县的三级联动、后台管理菜单、部门展示等等。
 
@@ -14,7 +12,7 @@
 
 先看看表结构吧
 
-![image-20220715220653631](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202207152334440.png)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f2041653cf5649f091981d085944f34b~tplv-k3u1fbpfcp-zoom-1.image)
 
 具体的 sql 文件，在贴的源码仓库中有。
 
@@ -24,9 +22,7 @@
 
 数据表中对应的数据关系大致如下：
 
-![image-20220715221421654](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202207152334697.png)
-
-
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e4c94c8e66924b7fa8edd22e9c2ea65f~tplv-k3u1fbpfcp-zoom-1.image)
 
 ## 二、项目代码
 
@@ -38,7 +34,7 @@
 
 完整依赖如下：
 
-```xml
+```
    <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
@@ -107,18 +103,13 @@
             <version>4.12</version>
         </dependency>
     </dependencies>
-
 ```
 
 关于 Mybatis-plus 的版本，最新的那个逆向生成器不太熟，就用了旧版本的。感兴趣的可以去试一试新版本的。
 
-
-
 ### 3.2、逆向生成代码
 
-
-
-```java
+```
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
@@ -239,11 +230,11 @@ public class CodeGenerator {
 
 运行代码：
 
-![image-20220715221559303](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202207152334363.png)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c7a7d50ff844486aa8cdf5adba85499e~tplv-k3u1fbpfcp-zoom-1.image)
 
 执行结果
 
-![image-20220715221633930](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202207152334598.png)
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/597870051a864da3b110d5b47be4c9d9~tplv-k3u1fbpfcp-zoom-1.image)
 
 默认里面是没有方法的话，不过用来写个基本的小demo是非常方便的。
 
@@ -251,7 +242,7 @@ public class CodeGenerator {
 
 controller、mapper、entity都不是重点，一笔带过了哈。
 
-```java
+```
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
@@ -270,16 +261,13 @@ public class CategoryController {
 }
 ```
 
-```java
+```
 public interface CategoryMapper extends BaseMapper<Category> {
 
 }
-
 ```
 
-
-
-```java
+```
 @Data
 @EqualsAndHashCode(callSuper = false)
 @TableName("pms_category")
@@ -310,12 +298,9 @@ public class Category implements Serializable {
     private List<Category> categoryChild;
 
 }
-
 ```
 
-
-
-```java
+```
 public interface ICategoryService extends IService<Category> {
 
     /**
@@ -328,9 +313,7 @@ public interface ICategoryService extends IService<Category> {
 
 真正的业务是在 serviceImpl 中
 
-
-
-```java
+```
 @Service
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements ICategoryService {
 
@@ -344,23 +327,23 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         //2、组装成父子的树形结构
         //2.1、找到所有的一级分类
         List<Category> categoriesLevel1 = allCategory.stream()
-            	// filter 方法就如名称一样，就是用来过滤的 
-            	// 满足条件的会留下，到最后会返回一个流式对象
+              // filter 方法就如名称一样，就是用来过滤的 
+              // 满足条件的会留下，到最后会返回一个流式对象
                 .filter(category ->
                         category.getParentCid() == 0
                 )
-            	// map 的理解百话点说就是可以对传入的对象做出修改 
-            	// 这里的意思就是找出当前一级分类中的二级分类，然后再set进去
+              // map 的理解百话点说就是可以对传入的对象做出修改 
+              // 这里的意思就是找出当前一级分类中的二级分类，然后再set进去
                 // 最后再返回一个流式对象
                 .map((menu) -> {
                     menu.setCategoryChild(getChildrens(menu, allCategory));
                     return menu;
                 })
-            	// 见名知意，这就是排序 ，其实也算是重定义Java比较器
+              // 见名知意，这就是排序 ，其实也算是重定义Java比较器
                .sorted((menu1, menu2) -> {
                     return (menu1.getSort() == null ? 0 : menu1.getSort()) - (menu2.getSort() == null ? 0 : menu2.getSort());
                 })
-            	// 就是将流转换为带泛型的List对象
+              // 就是将流转换为带泛型的List对象
                 .collect(Collectors.toList());
         return categoriesLevel1;
     }
@@ -382,20 +365,15 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         return collect;
     }
 }
-
 ```
 
 还有一些公共代码和配置文件什么的，在仓库中都是有的，这里不再重复贴出来啦。
-
-
 
 ### 3.4、测试结果
 
 我就是使用 Postman 测试的，没有专门画前端，前端太弱鸡啦，求大佬们放过...
 
-![image-20220715232445680](https://raw.githubusercontent.com/ningzaichun/nzc_img_store/main/img/202207152334537.png)
-
-
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ebae8dbb2a2c47169efefe514e0ec101~tplv-k3u1fbpfcp-zoom-1.image)
 
 源码：[github](https://github.com/ningzaichun/tree_menu_demo) 、 [gitee](https://gitee.com/crushlxb/tree_menu_demo)
 
@@ -405,29 +383,4 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 
 写 Demo 的时候，主要就想着能写出个 Demo 就不错了，但实际上真到了该上业务的时候，综合起来还是有很多值得思考的问题。
 
-所以在学习的时候针对一些必要的技术还是可以往深里挖掘挖掘的，并且自己也要学会根据现学的东西想到应用场景，思考如何整合项目，那些地方还有不足的，项目的扩展性如何等等，这些可以不用实现，但是在学习的时候能够多一些思考，这对于学习一个新技术是很有必要的。
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+在学习的时候针对一些必要的技术还是可以往深里挖掘挖掘的，并且自己也要学会根据现学的东西想到应用场景，思考如何整合项目，那些地方还有不足的，项目的扩展性如何等等，这些可以不用实现，但是在学习的时候能够多一些思考，这对于学习一个新技术是很有必要的。
