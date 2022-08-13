@@ -1,8 +1,5 @@
----
-highlight: a11y-dark
-theme: scrolls-light
----
-携手创作，共同成长！这是我参与「掘金日新计划 · 8 月更文挑战」的第8天，[点击查看活动详情](https://juejin.cn/post/7123120819437322247 "https://juejin.cn/post/7123120819437322247")
+# MybatisPlus中的BaseTypeHandler | 自定义类型器
+
 > 属于是今天实时编写的文章啦~，今天也属于是学习到新知识的一天
 >
 > `TypeHandler` 是我使用 `MybatisPlus` 这么久以来，第一次见到和使用~，属于是`弱鸡`无疑了。😀
