@@ -1,0 +1,27 @@
+{
+  "groups": [
+    {
+      "name": "gitee",
+      "type": "com.nzc.config.properties.GiteeProperties",
+      "sourceType": "com.nzc.config.properties.GiteeProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "gitee.client-id",
+      "type": "java.lang.String",
+      "sourceType": "com.nzc.config.properties.GiteeProperties"
+    },
+    {
+      "name": "gitee.client-secret",
+      "type": "java.lang.String",
+      "sourceType": "com.nzc.config.properties.GiteeProperties"
+    },
+    {
+      "name": "gitee.redirect-uri",
+      "type": "java.lang.String",
+      "sourceType": "com.nzc.config.properties.GiteeProperties"
+    }
+  ],
+  "hints": []
+}

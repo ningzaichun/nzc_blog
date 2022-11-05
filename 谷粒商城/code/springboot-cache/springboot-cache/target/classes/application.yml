@@ -1,0 +1,30 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: springboot-cache
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 阿里的数据库连接池
+    druid:
+      username: root
+      password: 123456
+      url: jdbc:mysql://localhost:3306/task1?serverTimezone=UTC&useSSL=false&characterEncoding=utf8&serverTimezone=GMT
+  redis:
+    host: 47.113.227.254
+    password: 000415
+  #指定缓存类型
+  cache:
+   type: redis
+  #指定存活时间（ms）
+   redis.time-to-live: 86400000
+  #指定前缀
+   redis.use-key-prefix: true
+  #是否缓存空值，可以防止缓存穿透
+   redis.cache-null-values: true
+mybatis-plus:
+  configuration:
+    cache-enabled: true #开启缓存
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql日志
+  mapper-locations: classpath:/mapper/**/*Mapper.xml

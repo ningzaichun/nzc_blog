@@ -1,0 +1,14 @@
+server:
+  port: 8089
+spring:
+  application:
+    name: springboot-thirdly-login
+gitee:
+  client-id: 52ac7765e42a0b6c8ccc88f09e07e46c88f1c859e8c13df110b6c539b2c9d402
+  client-secret: 1198d54334c926ed8b0627c1547caec31d7c6566dbfec8ef3c6d8a8cd09cc818
+  redirect-uri: http://127.0.0.1:8089/oauth/gitee/callback
+
+
+
+
+

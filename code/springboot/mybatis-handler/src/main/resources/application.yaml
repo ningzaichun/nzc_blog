@@ -1,0 +1,25 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: mybatis-handler
+  # 数据源配置
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 阿里的数据库连接池
+    druid:
+      username: root
+      password: 123456
+      url: jdbc:mysql://localhost:3306/task1?serverTimezone=UTC&useSSL=false&characterEncoding=utf8&serverTimezone=GMT
+      # 初使化连接数(向数据库要五个连接)
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+mybatis-plus:
+  configuration:
+    cache-enabled: true #开启缓存
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql日志
+  mapper-locations: classpath:/mapper/**/*Mapper.xml
+#  需要加这个配置
+  type-handlers-package: com.nzc.demo.handler
